@@ -48,8 +48,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    './style.css': '<%= config.sassPath %>/style.scss',
-                    './admin.css': '<%= config.sassPath %>/admin.scss'
+                    './style.css': '<%= config.sassPath %>/style.scss'
                 }
             }
         },
