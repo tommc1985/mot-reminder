@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.master')
 
-@section('title', 'Edit Player')
+@section('title', 'Edit MOT')
 
 @section('content')
 
@@ -10,17 +10,17 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
 
-                @include('admin/_heading')
+                @include('_heading')
 
-                @include('admin/_messages')
+                @include('_messages')
 
-                {!! Form::model($player, [
+                {!! Form::model($mot, [
                     'method' => 'PATCH',
-                    'route' => ['admin.players.update', $player->id],
+                    'route' => ['mots.update', $mot->id],
                     'class' => 'form-horizontal',
                 ]) !!}
 
-                    @include('admin/player/_form_fields')
+                    @include('mots/_form_fields')
 
                 {!! Form::close() !!}
 

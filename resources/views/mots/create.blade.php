@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.master')
 
-@section('title', 'Create Player')
+@section('title', 'Add MOT')
 
 @section('content')
 
@@ -10,16 +10,16 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
 
-                @include('admin/_heading')
+                @include('_heading')
 
-                @include('admin/_messages')
+                @include('_messages')
 
                 {!! Form::open([
-                    'route' => 'admin.players.index',
+                    'route' => 'mots.index',
                     'class' => 'form-horizontal'
                 ]) !!}
 
-                    @include('admin/player/_form_fields')
+                    @include('mots/_form_fields')
 
                 {!! Form::close() !!}
 

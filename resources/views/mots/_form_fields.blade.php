@@ -13,9 +13,9 @@
 </div>
 
 <div class="form-group">
-    <label class="col-sm-4 col-md-4 control-label">Image</label>
+    {!! Form::label('phone_number', 'Phone Number', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
-        {!! Form::select('image_id', array(null => '--- Select ---') + App\Image::orderBy('alt', 'asc')->lists('alt', 'id'), null, ['class' => 'form-control']) !!}
+        {!! Form::text('phone_number', null, array('class' => 'form-control')) !!}
     </div>
 </div>
 
@@ -27,9 +27,30 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('handicap', 'Handicap', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    {!! Form::label('car_make', 'Car Make/Model', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
-        {!! Form::input('number', 'handicap', null, array('class' => 'form-control', 'min' => 0, 'max' => 36)) !!}
+        {!! Form::text('car_make', null, array('class' => 'form-control')) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('reg_no', 'Car Reg No', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    <div class="col-sm-6 col-md-6">
+        {!! Form::text('reg_no', null, array('class' => 'form-control')) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('mot_date', 'MOT Date', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    <div class="col-sm-6 col-md-6">
+        {!! Form::date('mot_date', null, array('class' => 'form-control')) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('comments', 'Other comments', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    <div class="col-sm-6 col-md-6">
+        {!! Form::textarea('comments', null, array('class' => 'form-control')) !!}
     </div>
 </div>
 
