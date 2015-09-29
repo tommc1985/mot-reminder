@@ -11,6 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
+
+// Authentication routes...
+Route::get('auth/login', ['as' => 'auth.login', 'uses' =>'Auth\AuthController@getLogin']);
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', ['as' => 'auth.logout', 'uses' =>'Auth\AuthController@getLogout']);
+
+
+Route::get('/', ['as' => 'dashboard', 'uses' =>'Dashboard@index']);
+Route::resource('mots', 'MOT');
