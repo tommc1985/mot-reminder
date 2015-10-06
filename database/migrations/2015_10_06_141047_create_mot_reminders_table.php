@@ -17,7 +17,7 @@ class CreateMotRemindersTable extends Migration
                 $table->increments('id');
                 $table->integer('mot_id')->unsigned();
                 $table->integer('reminder_id')->unsigned();
-                $table->date('sent_date')->nullable();
+                $table->dateTime('sent_date')->nullable();
                 $table->timestamps();
 
                 $table->foreign('mot_id')->references('id')->on('mots')->onDelete('cascade');
