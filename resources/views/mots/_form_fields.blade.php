@@ -55,6 +55,21 @@
 </div>
 
 <div class="form-group">
+    <div class="col-sm-4 col-md-4">
+        <div class="row">
+            {!! Form::label('reminders', 'Reminders', array('class' => 'col-sm-12 col-md-12 control-label')) !!}
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        @if($reminders)
+            @foreach ($reminders as $reminder)
+                <label>{!! Form::checkbox('reminders[]', $reminder->id, in_array($reminder->id, $motReminders)) !!} {!! $reminder->description !!}</label><br />
+            @endforeach
+        @endif
+    </div>
+</div>
+
+<div class="form-group">
     <div class="col-sm-6 col-md-6 col-sm-offset-4 col-md-offset-4">
         {!! Form::submit('Save', array('class' => 'btn btn-primary')) !!}
     </div>

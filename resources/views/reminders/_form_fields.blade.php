@@ -36,7 +36,7 @@
 <div class="form-group">
     {!! Form::label('enabled', 'Enabled', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
-        {!! Form::checkbox('enabled', 1, array('class' => 'form-control')) !!}
+        {!! Form::checkbox('enabled', 1, null, array('class' => 'form-control')) !!}
     </div>
 </div>
 

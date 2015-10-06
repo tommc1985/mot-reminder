@@ -47,8 +47,14 @@ class Mot extends Controller
         $mot = new \App\Mot();
         $mot->mot_date = date('Y-m-d');
 
+        $reminders = \App\Reminder::orderBy('type', 'asc')
+            ->orderBy('delay_before', 'asc')
+            ->get();
+
+        $motReminders = array();
+
         // load the create form (app/views/mots/create.blade.php)
-        return view('mots/create', ['mot'=>$mot]);
+        return view('mots/create', ['mot'=>$mot,'reminders'=>$reminders,'motReminders'=>$motReminders]);
     }
 
     /**
@@ -64,6 +70,7 @@ class Mot extends Controller
         $data = $request->all();
 
         $mot->fill($data)->save();
+        $mot->saveReminders($data);
 
         \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully added");
 
@@ -91,8 +98,13 @@ class Mot extends Controller
     {
         $mot = \App\Mot::findOrFail($id);
 
-        return view('mots/edit')
-            ->with('mot', $mot);
+        $reminders = \App\Reminder::orderBy('type', 'asc')
+            ->orderBy('delay_before', 'asc')
+            ->get();
+
+        $motReminders = \App\MotReminder::lists('reminder_id', 'id')->toArray();
+
+        return view('mots/edit', ['mot'=>$mot,'reminders'=>$reminders,'motReminders'=>$motReminders]);
     }
 
     /**
@@ -109,6 +121,7 @@ class Mot extends Controller
         $data = $request->all();
 
         $mot->fill($data)->save();
+        $mot->saveReminders($data);
 
         \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully updated");
 
