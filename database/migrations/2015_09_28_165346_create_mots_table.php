@@ -20,8 +20,8 @@ class CreateMotsTable extends Migration
                 $table->string('last_name');
                 $table->string('phone_number')->nullable();
                 $table->string('email');
-                $table->string('car_make');
-                $table->string('reg_no');
+                $table->string('vehicle_make');
+                $table->string('vehicle_reg');
                 $table->mediumText('comments');
                 $table->date('mot_date');
                 $table->timestamps();

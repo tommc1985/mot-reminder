@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class Mot extends Request
+class Reminder extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,11 @@ class Mot extends Request
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone_number' => 'required',
-            'email' => 'email',
-            'vehicle_make' => '',
-            'vehicle_reg' => '',
-            'comments' => '',
-            'mot_date' => 'required',
+            'type' => 'required',
+            'description' => 'required',
+            'message' => 'required',
+            'delay_before' => 'required',
+            'delay_after' => 'required',
         ];
     }
 }

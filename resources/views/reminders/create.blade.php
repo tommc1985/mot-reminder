@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Add MOT')
+@section('title', 'Add Reminder')
 
 @section('content')
 
@@ -14,12 +14,12 @@
 
                 @include('_messages')
 
-                {!! Form::model($mot, [
-                    'route' => 'mots.index',
+                {!! Form::model($reminder, [
+                    'route' => 'reminders.index',
                     'class' => 'form-horizontal',
                 ]) !!}
 
-                    @include('mots/_form_fields')
+                    @include('reminders/_form_fields')
 
                 {!! Form::close() !!}
 

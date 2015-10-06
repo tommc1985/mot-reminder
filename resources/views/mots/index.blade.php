@@ -19,20 +19,20 @@
                 @include('_messages')
 
                 @if($mots)
-                    @foreach($mots as $player)
+                    @foreach($mots as $mot)
                     <div class="pull-right">
                             {!! Form::open([
                                 'method' => 'DELETE',
-                                'route' => ['mots.destroy', $player->id],
+                                'route' => ['mots.destroy', $mot->id],
                                 'class' => 'delete-model',
-                                'data-delete-message' => "Are you sure you want to delete {$player->first_name} {$player->last_name}?"
+                                'data-delete-message' => "Are you sure you want to delete {$mot->first_name} {$mot->last_name}'s MOT?"
                             ]) !!}
-                                <a class="btn btn-xs btn-info" href="{{ route('mots.edit', $player->id) }}">Edit</a>
+                                <a class="btn btn-xs btn-info" href="{{ route('mots.edit', $mot->id) }}">Edit</a>
                                 {!! Form::submit('Delete', ['class' => 'btn btn-xs btn-danger']) !!}
                             {!! Form::close() !!}
                     </div>
-                    <h5>{{ $player->last_name }}, {{ $player->first_name }}</h5>
-                    <p>Handicap: {{ $player->handicap }}</p>
+                    <h5>{{ $mot->last_name }}, {{ $mot->first_name }}</h5>
+                    <p>Vehicle: {{ $mot->vehicle_make }} ({{ $mot->vehicle_reg }})</p>
                     <hr />
                     @endforeach
                 @endif

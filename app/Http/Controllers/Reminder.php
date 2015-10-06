@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class Mot extends Controller
+class Reminder extends Controller
 {
 
     /**
@@ -26,15 +26,14 @@ class Mot extends Controller
      */
     public function index()
     {
-        // get all the Mots
-        $mots = \App\Mot::orderBy('mot_date', 'desc')
-            ->orderBy('last_name', 'asc')
-            ->orderBy('first_name', 'asc')
+        // get all the Reminders
+        $reminders = \App\Reminder::orderBy('type', 'asc')
+            ->orderBy('delay_before', 'asc')
             ->get();
 
-        // load the view and pass the Mots
-        return view('mots/index')
-            ->with('mots', $mots);
+        // load the view and pass the Reminders
+        return view('reminders/index')
+            ->with('reminders', $reminders);
     }
 
     /**
@@ -44,11 +43,10 @@ class Mot extends Controller
      */
     public function create()
     {
-        $mot = new \App\Mot();
-        $mot->mot_date = date('Y-m-d');
+        $reminder = new \App\Reminder();
 
-        // load the create form (app/views/mots/create.blade.php)
-        return view('mots/create', ['mot'=>$mot]);
+        // load the create form (app/views/reminders/create.blade.php)
+        return view('reminders/create', ['reminder'=>$reminder]);
     }
 
     /**
@@ -57,17 +55,19 @@ class Mot extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\App\Http\Requests\Mot $request)
+    public function store(\App\Http\Requests\Reminder $request)
     {
-        $mot = new \App\Mot();
+        $reminder = new \App\Reminder();
 
         $data = $request->all();
 
-        $mot->fill($data)->save();
+        $reminder->fill($data);
+        $reminder->enabled = $request->input('enabled', 0);
+        $reminder->save();
 
-        \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully added");
+        \Session::flash('flash_message', "\"{$reminder->description}\" reminder successfully added");
 
-        return redirect()->route('mots.index');
+        return redirect()->route('reminders.index');
     }
 
     /**
@@ -89,30 +89,32 @@ class Mot extends Controller
      */
     public function edit($id)
     {
-        $mot = \App\Mot::findOrFail($id);
+        $reminder = \App\Reminder::findOrFail($id);
 
-        return view('mots/edit')
-            ->with('mot', $mot);
+        return view('reminders/edit')
+            ->with('reminder', $reminder);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\App\Http\Requests\Mot  $request
+     * @param  \Illuminate\Http\App\Http\Requests\Reminder  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(\App\Http\Requests\Mot $request, $id)
+    public function update(\App\Http\Requests\Reminder $request, $id)
     {
-        $mot = \App\Mot::findOrFail($id);
+        $reminder = \App\Reminder::findOrFail($id);
 
         $data = $request->all();
 
-        $mot->fill($data)->save();
+        $reminder->fill($data);
+        $reminder->enabled = $request->input('enabled', 0);
+        $reminder->save();
 
-        \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully updated");
+        \Session::flash('flash_message', "\"{$reminder->description}\" reminder successfully updated");
 
-        return redirect()->route('mots.index');
+        return redirect()->route('reminders.index');
     }
 
     /**
@@ -123,12 +125,6 @@ class Mot extends Controller
      */
     public function destroy($id)
     {
-        $mot = Player::findOrFail($id);
-
-        $mot->delete();
-
-        \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully deleted");
-
-        return redirect()->route('mots.index');
+        \App::abort(404);
     }
 }

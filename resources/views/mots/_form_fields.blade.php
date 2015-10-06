@@ -27,16 +27,16 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('car_make', 'Car Make/Model', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    {!! Form::label('vehicle_make', 'Vehicle Make/Model', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
-        {!! Form::text('car_make', null, array('class' => 'form-control')) !!}
+        {!! Form::text('vehicle_make', null, array('class' => 'form-control')) !!}
     </div>
 </div>
 
 <div class="form-group">
-    {!! Form::label('reg_no', 'Car Reg No', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    {!! Form::label('vehicle_reg', 'Car Reg No', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
-        {!! Form::text('reg_no', null, array('class' => 'form-control')) !!}
+        {!! Form::text('vehicle_reg', null, array('class' => 'form-control')) !!}
     </div>
 </div>
 

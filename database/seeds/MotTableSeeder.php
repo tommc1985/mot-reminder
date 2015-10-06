@@ -14,6 +14,6 @@ class MotTableSeeder extends Seeder
     {
         DB::table('mots')->delete();
 
-        Mot::create(['first_name' => 'Test Number','last_name' => 'One','phone_number' => '01234 567890', 'email' => 'test@test1.com', 'car_make' => 'Ford Fiesta', 'reg_no' => 'PN12 ASD', 'comments'=>'Tyre warning given', 'mot_date'=>'16-10-2015']);
+        Mot::create(['first_name' => 'Test Number','last_name' => 'One','phone_number' => '01234 567890', 'email' => 'test@test1.com', 'vehicle_make' => 'Ford Fiesta', 'vehicle_reg' => 'PN12 ASD', 'comments'=>'Tyre warning given', 'mot_date'=>'16-10-2015']);
     }
 }
