@@ -44,8 +44,11 @@ class Mot extends Controller
      */
     public function create()
     {
+        $mot = new \App\Mot();
+        $mot->mot_date = date('Y-m-d');
+
         // load the create form (app/views/mots/create.blade.php)
-        return view('mots/create');
+        return view('mots/create', ['mot'=>$mot]);
     }
 
     /**

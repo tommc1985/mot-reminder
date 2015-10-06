@@ -14,9 +14,9 @@
 
                 @include('_messages')
 
-                {!! Form::open([
-                    'route' => 'mots.index',
-                    'class' => 'form-horizontal'
+                {!! Form::model($mot, [
+                    'route' => 'mots.create',
+                    'class' => 'form-horizontal',
                 ]) !!}
 
                     @include('mots/_form_fields')
