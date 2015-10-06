@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class Reminder extends Controller
+class Message extends Controller
 {
 
     /**
@@ -26,14 +26,14 @@ class Reminder extends Controller
      */
     public function index()
     {
-        // get all the Reminders
-        $reminders = \App\Reminder::orderBy('type', 'asc')
+        // get all the Messages
+        $messages = \App\Message::orderBy('type', 'asc')
             ->orderBy('delay_before', 'asc')
             ->get();
 
-        // load the view and pass the Reminders
-        return view('reminders/index')
-            ->with('reminders', $reminders);
+        // load the view and pass the Messages
+        return view('messages/index')
+            ->with('messages', $messages);
     }
 
     /**
@@ -43,10 +43,10 @@ class Reminder extends Controller
      */
     public function create()
     {
-        $reminder = new \App\Reminder();
+        $message = new \App\Message();
 
-        // load the create form (app/views/reminders/create.blade.php)
-        return view('reminders/create', ['reminder'=>$reminder]);
+        // load the create form (app/views/messages/create.blade.php)
+        return view('messages/create', ['message'=>$message]);
     }
 
     /**
@@ -55,19 +55,19 @@ class Reminder extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\App\Http\Requests\Reminder $request)
+    public function store(\App\Http\Requests\Message $request)
     {
-        $reminder = new \App\Reminder();
+        $message = new \App\Message();
 
         $data = $request->all();
 
-        $reminder->fill($data);
-        $reminder->enabled = $request->input('enabled', 0);
-        $reminder->save();
+        $message->fill($data);
+        $message->enabled = $request->input('enabled', 0);
+        $message->save();
 
-        \Session::flash('flash_message', "\"{$reminder->description}\" reminder successfully added");
+        \Session::flash('flash_message', "\"{$message->description}\" message successfully added");
 
-        return redirect()->route('reminders.index');
+        return redirect()->route('messages.index');
     }
 
     /**
@@ -89,32 +89,32 @@ class Reminder extends Controller
      */
     public function edit($id)
     {
-        $reminder = \App\Reminder::findOrFail($id);
+        $message = \App\Message::findOrFail($id);
 
-        return view('reminders/edit')
-            ->with('reminder', $reminder);
+        return view('messages/edit')
+            ->with('message', $message);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\App\Http\Requests\Reminder  $request
+     * @param  \Illuminate\Http\App\Http\Requests\Message  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(\App\Http\Requests\Reminder $request, $id)
+    public function update(\App\Http\Requests\Message $request, $id)
     {
-        $reminder = \App\Reminder::findOrFail($id);
+        $message = \App\Message::findOrFail($id);
 
         $data = $request->all();
 
-        $reminder->fill($data);
-        $reminder->enabled = $request->input('enabled', 0);
-        $reminder->save();
+        $message->fill($data);
+        $message->enabled = $request->input('enabled', 0);
+        $message->save();
 
-        \Session::flash('flash_message', "\"{$reminder->description}\" reminder successfully updated");
+        \Session::flash('flash_message', "\"{$message->description}\" message successfully updated");
 
-        return redirect()->route('reminders.index');
+        return redirect()->route('messages.index');
     }
 
     /**

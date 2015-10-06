@@ -47,14 +47,14 @@ class Mot extends Controller
         $mot = new \App\Mot();
         $mot->mot_date = date('Y-m-d');
 
-        $reminders = \App\Reminder::orderBy('type', 'asc')
+        $messages = \App\Message::orderBy('type', 'asc')
             ->orderBy('delay_before', 'asc')
             ->get();
 
-        $motReminders = array();
+        $reminders = array();
 
         // load the create form (app/views/mots/create.blade.php)
-        return view('mots/create', ['mot'=>$mot,'reminders'=>$reminders,'motReminders'=>$motReminders]);
+        return view('mots/create', ['mot'=>$mot,'messages'=>$messages,'reminders'=>$reminders]);
     }
 
     /**
@@ -98,13 +98,13 @@ class Mot extends Controller
     {
         $mot = \App\Mot::findOrFail($id);
 
-        $reminders = \App\Reminder::orderBy('type', 'asc')
+        $messages = \App\Message::orderBy('type', 'asc')
             ->orderBy('delay_before', 'asc')
             ->get();
 
-        $motReminders = \App\MotReminder::lists('reminder_id', 'id')->toArray();
+        $reminders = \App\Reminder::lists('message_id', 'id')->toArray();
 
-        return view('mots/edit', ['mot'=>$mot,'reminders'=>$reminders,'motReminders'=>$motReminders]);
+        return view('mots/edit', ['mot'=>$mot,'messages'=>$messages,'reminders'=>$reminders]);
     }
 
     /**

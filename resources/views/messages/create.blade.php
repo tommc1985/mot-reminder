@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Edit Reminder')
+@section('title', 'Add Message')
 
 @section('content')
 
@@ -14,13 +14,12 @@
 
                 @include('_messages')
 
-                {!! Form::model($reminder, [
-                    'method' => 'PATCH',
-                    'route' => ['reminders.update', $reminder->id],
+                {!! Form::model($message, [
+                    'route' => 'messages.index',
                     'class' => 'form-horizontal',
                 ]) !!}
 
-                    @include('reminders/_form_fields')
+                    @include('messages/_form_fields')
 
                 {!! Form::close() !!}
 

@@ -9,11 +9,11 @@ class Mot extends Model
     protected $fillable = array('first_name', 'last_name', 'phone_number', 'email', 'vehicle_make', 'vehicle_reg', 'comments', 'mot_date');
 
     /**
-     * Get the reminders associated with the MOT.
+     * Get the Reminders associated with the MOT.
      */
     public function reminders()
     {
-        return $this->hasMany('App\MotReminder');
+        return $this->hasMany('App\Reminder');
     }
 
     /**
@@ -22,21 +22,21 @@ class Mot extends Model
      */
     public function saveReminders($data)
     {
-        if (isset($data['reminders'])) {
+        if (isset($data['messages'])) {
 
-            \DB::table('mot_reminders')
-                ->whereNotIn('reminder_id', $data['reminders'])
+            \DB::table('reminders')
+                ->whereNotIn('message_id', $data['messages'])
                 ->where('mot_id', $this->id)
                 ->delete();
 
-            foreach ($data['reminders'] as $reminderId) {
-                MotReminder::firstOrCreate(array('mot_id' => $this->id,'reminder_id'=>$reminderId));
+            foreach ($data['messages'] as $messageId) {
+                Reminder::firstOrCreate(array('mot_id' => $this->id,'message_id'=>$messageId));
             }
 
             return true;
         }
 
-        \DB::table('mot_reminders')
+        \DB::table('reminders')
             ->where('mot_id', $this->id)
             ->delete();
 

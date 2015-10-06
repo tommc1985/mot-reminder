@@ -6,25 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reminder extends Model
 {
-    protected $fillable = array('type', 'description', 'message', 'delay_before', 'delay_after', 'enabled');
+    protected $fillable = array('mot_id', 'message_id', 'sent_date');
 
     /**
-     * Get the MOT Reminders associated with the Reminder.
+     * Get the MOT associated with the Reminder.
      */
-    public function motReminders()
+    public function mot()
     {
-        return $this->hasMany('App\MotReminder');
+        return $this->belongsTo('App\Mot');
     }
 
     /**
-     * Returns an array of the possible types of reminder
-     * @return array Types
+     * Get the Message associated with the Reminder.
      */
-    public static function types()
+    public function message()
     {
-        return array(
-            'sms' => 'SMS',
-            'email' => 'Email',
-        );
+        return $this->belongsTo('App\Message');
     }
 }

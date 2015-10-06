@@ -8,7 +8,7 @@
 <div class="form-group">
     {!! Form::label('type', 'Type', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
-        {!! Form::select('type', array(null => '--- Select ---') + App\Reminder::types(), null, ['class' => 'form-control']) !!}
+        {!! Form::select('type', array(null => '--- Select ---') + App\Message::types(), null, ['class' => 'form-control']) !!}
     </div>
 </div>
 

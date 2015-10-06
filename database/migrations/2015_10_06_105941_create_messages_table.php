@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRemindersTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class CreateRemindersTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('reminders')) {
-            Schema::create('reminders', function(Blueprint $table)
+        if (!Schema::hasTable('messages')) {
+            Schema::create('messages', function(Blueprint $table)
             {
                 $table->increments('id');
                 $table->string('type');
@@ -34,8 +34,8 @@ class CreateRemindersTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('reminders')) {
-            Schema::drop('reminders');
+        if (Schema::hasTable('messages')) {
+            Schema::drop('messages');
         }
     }
 }

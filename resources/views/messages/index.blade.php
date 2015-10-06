@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Reminders')
+@section('title', 'Messages')
 
 @section('content')
 
@@ -11,19 +11,19 @@
             <div class="col-md-8 col-md-offset-2">
 
                 <div class="pull-right">
-                    <a class="btn btn-xs btn-info" href="{{ route('reminders.create') }}">Add Reminder</a>
+                    <a class="btn btn-xs btn-info" href="{{ route('messages.create') }}">Add Message</a>
                 </div>
 
                 @include('_heading')
 
                 @include('_messages')
 
-                @if($reminders)
-                    @foreach($reminders as $reminder)
+                @if($messages)
+                    @foreach($messages as $message)
                     <div class="pull-right">
-                        <a class="btn btn-xs btn-info" href="{{ route('reminders.edit', $reminder->id) }}">Edit</a>
+                        <a class="btn btn-xs btn-info" href="{{ route('messages.edit', $message->id) }}">Edit</a>
                     </div>
-                    <h5>{{ $reminder->description }}</h5>
+                    <h5>{{ $message->description }}</h5>
                     <hr />
                     @endforeach
                 @endif
