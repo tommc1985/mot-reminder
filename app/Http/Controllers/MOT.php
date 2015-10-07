@@ -69,8 +69,15 @@ class Mot extends Controller
 
         $data = $request->all();
 
-        $mot->fill($data);
+        $mot->first_name = $request->input('first_name');
+        $mot->last_name = $request->input('last_name');
+        $mot->phone_number = $request->input('phone_number');
+        $mot->email = $request->input('email');
+        $mot->vehicle_make = $request->input('vehicle_make');
         $mot->vehicle_reg = strtoupper($request->input('vehicle_reg'));
+        $mot->comments = $request->input('comments');
+        $mot->mot_date = $request->input('mot_date');
+        $mot->expiry_date = $request->input('expiry_date') ? $request->input('expiry_date') : NULL;
         $mot->save();
         $mot->saveReminders($data);
 
@@ -122,8 +129,15 @@ class Mot extends Controller
 
         $data = $request->all();
 
-        $mot->fill($data);
+        $mot->first_name = $request->input('first_name');
+        $mot->last_name = $request->input('last_name');
+        $mot->phone_number = $request->input('phone_number');
+        $mot->email = $request->input('email');
+        $mot->vehicle_make = $request->input('vehicle_make');
         $mot->vehicle_reg = strtoupper($request->input('vehicle_reg'));
+        $mot->comments = $request->input('comments');
+        $mot->mot_date = $request->input('mot_date');
+        $mot->expiry_date = $request->input('expiry_date') ? $request->input('expiry_date') : NULL;
         $mot->save();
         $mot->saveReminders($data);
 
