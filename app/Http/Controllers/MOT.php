@@ -51,7 +51,7 @@ class Mot extends Controller
             ->orderBy('delay_before', 'asc')
             ->get();
 
-        $reminders = array();
+        $reminders = \App\Message::where('enabled', 1)->lists('id', 'description')->toArray();
 
         // load the create form (app/views/mots/create.blade.php)
         return view('mots/create', ['mot'=>$mot,'messages'=>$messages,'reminders'=>$reminders]);
