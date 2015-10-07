@@ -26,11 +26,18 @@ class Mot extends Controller
      */
     public function index()
     {
-        // get all the Mots
-        $mots = \App\Mot::orderBy('mot_date', 'desc')
-            ->orderBy('last_name', 'asc')
-            ->orderBy('first_name', 'asc')
-            ->get();
+        $request = \Illuminate\Http\Request::capture();
+        $searchText = $request->get('s');
+
+        if ($searchText) {
+            $mots = \App\Mot::whereRaw("MATCH(first_name, last_name, phone_number, email, vehicle_make, vehicle_reg, comments) AGAINST (? IN BOOLEAN MODE)", [$searchText])->get();
+        } else {
+            // get all the Mots
+            $mots = \App\Mot::orderBy('mot_date', 'desc')
+                ->orderBy('last_name', 'asc')
+                ->orderBy('first_name', 'asc')
+                ->get();
+        }
 
         // load the view and pass the Mots
         return view('mots/index')
