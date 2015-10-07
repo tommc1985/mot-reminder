@@ -70,7 +70,7 @@ body {
 	position: fixed;
     top: 0;
     z-index: 9999;
-    padding: 10px 0;
+    padding: 7px 0;
 
     background-color: $color-grey-dark;
     border-bottom: 3px solid $color-grey-medium;
@@ -93,6 +93,7 @@ body {
 			margin: -2px 0 0 -2px;
 		}
 		span {
+			margin-top: 3px;
 			color: $color-white;
 		}
 	}

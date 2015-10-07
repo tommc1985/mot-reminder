@@ -8195,35 +8195,35 @@ nav ul {
   background: #ed3437;
 }
 
-.btn {
-  display: inline-block;
-  padding: 15px 20px;
-  padding: 1.5rem 2rem;
-  color: #000;
-  font-weight: bold;
-  text-align: center;
-  text-transform: uppercase;
-  line-height: 1em;
-  vertical-align: middle;
-  background: transparent;
-  border: 1px solid #000;
-  cursor: pointer;
-  transition: all 250ms;
-}
+/*.btn {
+	display: inline-block;
+	@include rem('padding', 15px 20px);
 
-.btn:hover, a:hover .btn {
-  color: #666;
-  border-color: #666;
+	color: #000;
+	font-weight: bold;
+    text-align: center;
+	text-transform: uppercase;
+	line-height: 1em;
+	vertical-align: middle;
+
+	background: transparent;
+	border: 1px solid #000;
+ 	cursor: pointer;
+
+ 	transition: all 250ms;
 }
+    .btn:hover, a:hover .btn {
+    	color: $color-grey-medium-dark;
+    	border-color: $color-grey-medium-dark;
+    }
 
 .btn-container {
-  text-align: center;
-}
+	text-align: center;
 
-.btn-container .btn {
-  margin: 0 10px 15px 10px;
-}
-
+    .btn {
+    	margin: 0 10px 15px 10px;
+    }
+}*/
 .img-container img {
   margin-bottom: 30px;
 }
@@ -8465,7 +8465,7 @@ body {
   position: fixed;
   top: 0;
   z-index: 9999;
-  padding: 10px 0;
+  padding: 7px 0;
   background-color: #333;
   border-bottom: 3px solid #999;
 }
@@ -8491,6 +8491,7 @@ body {
 }
 
 .logo span {
+  margin-top: 3px;
   color: #fff;
 }
 

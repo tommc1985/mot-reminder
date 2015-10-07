@@ -27,3 +27,5 @@ Route::get('auth/logout', ['as' => 'auth.logout', 'uses' =>'Auth\AuthController@
 Route::get('/', ['as' => 'dashboard', 'uses' =>'Dashboard@index']);
 Route::resource('mots', 'Mot');
 Route::resource('messages', 'Message');
+
+Route::get('mots/search', ['as' => 'mots.search', 'uses' =>'Mot@search']);

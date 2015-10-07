@@ -30,7 +30,7 @@
                         @foreach ($messages as $message)
                         <tr>
                             <td>{{ $message->description }}</td>
-                            <td class="text-center">
+                            <td class="text-right">
                                 <a class="btn btn-xs btn-info" href="{{ route('messages.edit', $message->id) }}">Edit</a>
                             </td>
                         </tr>

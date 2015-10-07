@@ -26,21 +26,14 @@ class Mot extends Controller
      */
     public function index()
     {
-        $request = \Illuminate\Http\Request::capture();
-        $searchText = $request->get('s');
-
-        if ($searchText) {
-            $mots = \App\Mot::whereRaw("MATCH(first_name, last_name, phone_number, email, vehicle_make, vehicle_reg, comments) AGAINST (? IN BOOLEAN MODE)", [$searchText])->get();
-        } else {
-            // get all the Mots
-            $mots = \App\Mot::orderBy('mot_date', 'desc')
-                ->orderBy('last_name', 'asc')
-                ->orderBy('first_name', 'asc')
-                ->get();
-        }
+        // get all the Mots
+        $mots = \App\Mot::orderBy('mot_date', 'desc')
+            ->orderBy('last_name', 'asc')
+            ->orderBy('first_name', 'asc')
+            ->get();
 
         // load the view and pass the Mots
-        return view('mots/index')
+        return view('mots/index', ['mots'=>$mots])
             ->with('mots', $mots);
     }
 
@@ -154,5 +147,27 @@ class Mot extends Controller
         \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully deleted");
 
         return redirect()->route('mots.index');
+    }
+
+    /**
+     * Display a search listings of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $request = \Illuminate\Http\Request::capture();
+        $s = $request->get('s');
+
+        $s = str_replace('*', '', $s);
+        if (!$s)
+            return redirect()->route('mots.index');
+
+        $searchText = str_replace(' ', '* ', $s) . '*';
+        $mots = \App\Mot::whereRaw("MATCH(first_name, last_name, phone_number, email, vehicle_make, vehicle_reg, comments) AGAINST (? IN BOOLEAN MODE)", [$searchText])->get();
+
+        // load the view and pass the Mots
+        return view('mots/index', ['mots'=>$mots,'s'=>$s])
+            ->with('mots', $mots);
     }
 }
