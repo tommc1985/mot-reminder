@@ -12,7 +12,7 @@
             <div class="col-md-10 col-md-offset-1">
 
                 <div class="pull-right">
-                    <a class="btn btn-xs btn-info" href="{{ route('mots.create') }}">Add MOT</a>
+                    <a class="btn btn-xs btn-primary" href="{{ route('mots.create') }}">Add MOT</a>
                 </div>
 
                 @include('_heading')
@@ -22,7 +22,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 col-md-offset-7">
+            <div class="col-md-4 col-md-offset-7 col-sm-6 col-sm-offset-6 col-xs-8 col-xs-offset-4">
                 @include('mots/_search_form')
             </div>
         </div>
@@ -53,7 +53,7 @@
                                     'class' => 'delete-model',
                                     'data-delete-message' => "Are you sure you want to delete {$mot->first_name} {$mot->last_name}'s MOT?"
                                 ]) !!}
-                                    <a class="btn btn-xs btn-info" href="{{ route('mots.edit', $mot->id) }}">Edit</a>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('mots.edit', $mot->id) }}">Edit</a>
                                     {!! Form::submit('Delete', ['class' => 'btn btn-xs btn-danger']) !!}
                                 {!! Form::close() !!}
                             </td>
@@ -62,6 +62,7 @@
                     </tbody>
                 </table>
                 @endif
+
             </div>
         </div>
     </div>

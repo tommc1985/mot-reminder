@@ -1,4 +1,4 @@
-<div class="col-md-12 col-sm-6 col-sm-offset-6 col-xs-6 col-xs-offset-6">
+<div class="col-md-12">
     {!! Form::open([
         'method'=> 'GET',
         'route' => 'mots.search',
