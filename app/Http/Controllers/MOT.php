@@ -69,7 +69,9 @@ class Mot extends Controller
 
         $data = $request->all();
 
-        $mot->fill($data)->save();
+        $mot->fill($data);
+        $mot->vehicle_reg = strtoupper($request->input('vehicle_reg'));
+        $mot->save();
         $mot->saveReminders($data);
 
         \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully added");
@@ -120,7 +122,9 @@ class Mot extends Controller
 
         $data = $request->all();
 
-        $mot->fill($data)->save();
+        $mot->fill($data);
+        $mot->vehicle_reg = strtoupper($request->input('vehicle_reg'));
+        $mot->save();
         $mot->saveReminders($data);
 
         \Session::flash('flash_message', "{$mot->first_name} {$mot->last_name}'s MOT successfully updated");
