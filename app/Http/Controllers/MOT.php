@@ -102,7 +102,7 @@ class Mot extends Controller
             ->orderBy('delay_before', 'asc')
             ->get();
 
-        $reminders = \App\Reminder::lists('message_id', 'id')->toArray();
+        $reminders = \App\Reminder::where('mot_id', $mot->id)->lists('message_id', 'id')->toArray();
 
         return view('mots/edit', ['mot'=>$mot,'messages'=>$messages,'reminders'=>$reminders]);
     }
