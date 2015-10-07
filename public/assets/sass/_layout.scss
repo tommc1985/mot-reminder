@@ -1,4 +1,7 @@
 // ----- Layout -----
+body {
+	margin-top: 50px;
+}
 
 // Custom containers and columns
 .fullwidth, .fullwidth-sm, .fullwidth-lg, .fullwidth-np, .fullwidth-bg {
@@ -69,8 +72,8 @@
     z-index: 9999;
     padding: 10px 0;
 
-    background-color: $color-grey-medium;
-    border-bottom: 3px solid $color-grey-dark;
+    background-color: $color-grey-dark;
+    border-bottom: 3px solid $color-grey-medium;
 
     .container { position: relative; }
 }
@@ -106,7 +109,7 @@
 		margin: 0 10px;
 
 		&:hover {
-			color: $color-grey-dark;
+			color: $color-grey-medium-light;
 		}
 	}
 
@@ -117,7 +120,7 @@
 		@include transition(all 300ms);
 
 		&:hover {
-			color: $color-grey-dark;
+			color: $color-grey-medium-light;
 		}
 	}
 

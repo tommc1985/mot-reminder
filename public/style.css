@@ -8370,6 +8370,10 @@ nav ul {
   }
 }
 
+body {
+  margin-top: 50px;
+}
+
 .fullwidth, .fullwidth-sm, .fullwidth-lg, .fullwidth-np, .fullwidth-bg {
   width: 100%;
   clear: both;
@@ -8462,8 +8466,8 @@ nav ul {
   top: 0;
   z-index: 9999;
   padding: 10px 0;
-  background-color: #999;
-  border-bottom: 3px solid #333;
+  background-color: #333;
+  border-bottom: 3px solid #999;
 }
 
 .header .container {
@@ -8504,7 +8508,7 @@ nav ul {
 }
 
 .nav-primary a:hover {
-  color: #333;
+  color: #aaa;
 }
 
 .nav-primary ul > li > a, .logo, .nav-mobile-toggle, .nav-mobile a, .nav-mobile-close, .flexnav .touch-button {
@@ -8516,7 +8520,7 @@ nav ul {
 }
 
 .nav-primary ul > li > a:hover, .logo:hover, .nav-mobile-toggle:hover, .nav-mobile a:hover, .nav-mobile-close:hover, .flexnav .touch-button:hover {
-  color: #333;
+  color: #aaa;
 }
 
 .nav-mobile-toggle, .nav-mobile, .sb-slidebar, .nav-sections {

@@ -1,14 +1,14 @@
 <!-- Main Nav -->
-<?php /*<header class="fullwidth-sm header sb-slide">
+<header class="fullwidth-sm header sb-slide">
     <div class="container">
+        <a href="{{ route('dashboard') }}" class="logo">
+            <span>MPK Autos</span>
+        </a>
 
         <nav class="nav nav-primary">
-            <a href="{{ route('home') }}" class="active">Home</a>
-            <a href="{{ route('dashboard') }}" class="active">Dashboard</a>
-            <a href="{{ route('admin.players.index') }}">Players</a>
-            <a href="{{ route('admin.courses.index') }}">Courses</a>
-            <a href="{{ route('admin.events.index') }}">Events</a>
-            <a href="{{ route('admin.images.index') }}">Images</a>
+            <a href="{{ route('dashboard') }}" class="active">Home</a>
+            <a href="{{ route('mots.index') }}">MOTs</a>
+            <a href="{{ route('messages.index') }}">Messages</a>
             <a href="{{ route('auth.logout') }}">Logout</a>
         </nav>
 
@@ -19,17 +19,14 @@
 </header>
 
 <div class="sb-slidebar sb-right">
-<nav class="nav-mobile">
-    <ul>
-        <li><a href="{{ route('home') }}" class="">Home</a>
-            <span class="nav-mobile-close"><i class="icon-close"></i></span>
-        </li>
-        <li><a href="{{ route('dashboard') }}" class="">Dashboard</a></li>
-        <li><a href="{{ route('admin.players.index') }}" class="">Players</a></li>
-        <li><a href="{{ route('admin.courses.index') }}" class="">Courses</a></li>
-        <li><a href="{{ route('admin.events.index') }}" class="">Events</a></li>
-        <li><a href="{{ route('admin.images.index') }}" class="">Images</a></li>
-        <li><a href="{{ route('auth.logout') }}" class="">Logout</a></li>
-    </ul>
+    <nav class="nav-mobile">
+        <ul>
+            <li><a href="{{ route('dashboard') }}" class="">Home</a>
+                <span class="nav-mobile-close"><i class="icon-close"></i></span>
+            </li>
+            <li><a href="{{ route('mots.index') }}" class="">Players</a></li>
+            <li><a href="{{ route('messages.index') }}" class="">Messages</a></li>
+            <li><a href="{{ route('auth.logout') }}" class="">Logout</a></li>
+        </ul>
     </nav>
-</div>*/ ?>
+</div>
