@@ -44,7 +44,7 @@ class Reminder extends Model
     /**
      * Send the SMS reminder
      */
-    public function sendSMS ()
+    public function sendSMS()
     {
 
     }
@@ -52,8 +52,38 @@ class Reminder extends Model
     /**
      * Send the Email reminder
      */
-    public function sendEmail ()
+    public function sendEmail()
     {
+        $this->_processMessageBody();
+    }
 
+    /**
+     * Send the Email reminder
+     */
+    protected function _processMessageBody()
+    {
+        $placeholders = array(
+            '#FIRST_NAME#',
+            '#LAST_NAME#',
+            '#PHONE_NUMBER#',
+            '#EMAIL#',
+            '#VEHICLE_MAKE#',
+            '#VEHICLE_REG#',
+            '#EXPIRY_DATE#',
+        );
+
+        $values = array(
+            $this->mot->first_name,
+            $this->mot->last_name,
+            $this->mot->phone_number,
+            $this->mot->email,
+            $this->mot->vehicle_make,
+            $this->mot->vehicle_reg,
+            $this->mot->expiry_date,
+        );
+
+        $messageBody = str_replace($placeholders, $values, $this->message->message);
+
+        var_dump($messageBody);
     }
 }

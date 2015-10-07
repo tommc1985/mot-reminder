@@ -46,7 +46,7 @@ class SendReminders extends Command
             $reminders = $message->eligibleReminders();
 
             foreach ($reminders as $reminder) {
-
+                $reminder->send();
             }
         }
     }
