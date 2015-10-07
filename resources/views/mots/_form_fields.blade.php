@@ -48,6 +48,13 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('expiry_date', 'MOT Expiry Date', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    <div class="col-sm-6 col-md-6">
+        {!! Form::date('expiry_date', null, array('class' => 'form-control')) !!}
+    </div>
+</div>
+
+<div class="form-group">
     {!! Form::label('comments', 'Other comments', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
         {!! Form::textarea('comments', null, array('class' => 'form-control')) !!}
