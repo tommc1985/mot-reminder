@@ -27,4 +27,24 @@ class Message extends Model
             'email' => 'Email',
         );
     }
+
+    /**
+     * Fetch eligible reminders
+     */
+    public function eligibleReminders()
+    {
+        if ($this->enabled) {
+            $expiry = $this->threshold * 86400;
+            $expiryDate = date('Y-m-d', time() + $expiry);
+
+            $reminders = \App\Reminder::select('reminders.*')
+                ->join('mots', 'reminders.mot_id','=','mots.id')
+                ->where('mots.expiry_date', $expiryDate)
+                ->get();
+
+            return $reminders;
+        }
+
+        return array();
+    }
 }
