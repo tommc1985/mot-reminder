@@ -14,8 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        DB::table('reminders')->delete();
         $this->call('UserTableSeeder');
+        $this->call('MessageTableSeeder');
         $this->call('MotTableSeeder');
+        $this->call('ReminderTableSeeder');
 
         Model::reguard();
     }

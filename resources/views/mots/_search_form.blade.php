@@ -10,6 +10,6 @@
             <input type="submit" class="btn btn-default" value="Search" />
             <a href="{{ route('mots.index') }}" class="btn btn-default">Reset</a>
         </span>
-    </div><!-- /input-group -->
+    </div>
     {!! Form::close() !!}
 </div>
