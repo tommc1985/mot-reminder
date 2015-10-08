@@ -105,7 +105,11 @@ class Mot extends Controller
      */
     public function edit($id)
     {
-        $mot = \App\Mot::findOrFail($id);
+        try{
+            $mot = \App\Mot::findOrFail($id);
+        }catch(\ModelNotFoundException $e){
+            \App::abort(404);
+        }
 
         $messages = \App\Message::orderBy('type', 'asc')
             ->orderBy('delay_before', 'asc')

@@ -89,7 +89,11 @@ class Message extends Controller
      */
     public function edit($id)
     {
-        $message = \App\Message::findOrFail($id);
+        try{
+            $message = \App\Message::findOrFail($id);
+        }catch(\ModelNotFoundException $e){
+            \App::abort(404);
+        }
 
         return view('messages/edit')
             ->with('message', $message);
