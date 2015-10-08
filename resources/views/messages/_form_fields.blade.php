@@ -13,6 +13,13 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('subject', 'Subject', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    <div class="col-sm-6 col-md-6">
+        {!! Form::text('subject', null, array('class' => 'form-control')) !!}
+    </div>
+</div>
+
+<div class="form-group">
     {!! Form::label('message', 'Message', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
         {!! Form::textarea('message', null, array('class' => 'form-control')) !!}
@@ -20,16 +27,9 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('delay_before', 'Delay Before', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
+    {!! Form::label('threshold', 'Threshold (days)', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
     <div class="col-sm-6 col-md-6">
-        {!! Form::number('delay_before', null, array('class' => 'form-control')) !!}
-    </div>
-</div>
-
-<div class="form-group">
-    {!! Form::label('delay_after', 'Delay After', array('class' => 'col-sm-4 col-md-4 control-label')) !!}
-    <div class="col-sm-6 col-md-6">
-        {!! Form::number('delay_after', null, array('class' => 'form-control')) !!}
+        {!! Form::number('threshold', null, array('class' => 'form-control', 'min' => 1, 'max' => 365)) !!}
     </div>
 </div>
 

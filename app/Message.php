@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = array('type', 'description', 'message', 'delay_before', 'delay_after', 'enabled');
+    protected $fillable = array('type', 'description', 'subject', 'message', 'threshold', 'enabled');
 
     /**
      * Get the Reminders associated with the Message.

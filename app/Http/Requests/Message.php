@@ -27,8 +27,7 @@ class Message extends Request
             'type' => 'required',
             'description' => 'required',
             'message' => 'required',
-            'delay_before' => 'required',
-            'delay_after' => 'required',
+            'threshold' => 'required',
         ];
     }
 }

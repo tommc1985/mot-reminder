@@ -28,7 +28,7 @@ class Message extends Controller
     {
         // get all the Messages
         $messages = \App\Message::orderBy('type', 'asc')
-            ->orderBy('delay_before', 'asc')
+            ->orderBy('threshold', 'asc')
             ->get();
 
         // load the view and pass the Messages
