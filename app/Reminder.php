@@ -90,8 +90,35 @@ class Reminder extends Model
      */
     public function sendEmail()
     {
+        $mot = $this->mot;
+        $to = $this->mot->email;
         $subject = $this->_processSubject();
-        $message = $this->_processBody();
+        $messageBody = $this->_processBody();
+        $messageHtmlBody = $this->_processHtmlBody();
+
+        // Set vars
+        $vars = [
+            'subject' => $subject,
+            'messageBody' => $messageHtmlBody,
+            'mode' => 'live',
+        ];
+
+        // If in dev mode
+        if (env('MAIL_MODE', 'dev') !== 'live') {
+            $to = env('DEVELOPER_EMAIL');
+            $vars['mode'] = 'dev';
+            $vars['intendedRecipient'] = $this->mot->email;
+        }
+
+        // Send email
+        \Mail::send('reminders.email_html', $vars, function($message) use ($to, $subject, $mot)
+        {
+            $message->to($to, $mot->first_name . ' ' . $mot->last_name)->subject($subject);
+        });
+
+        $this->sent_date = date('Y-m-d H:i:s');
+        $this->sent_message = $messageBody;
+        $this->save();
 
         return true;
     }
@@ -113,12 +140,27 @@ class Reminder extends Model
     }
 
     /**
-     * Process the passed copy into HTML for email template
+     * Process the copy into HTML for email template
      */
-    protected static function _processHtml($copy)
+    protected function _processHtmlBody()
     {
-        $processedCopy = $copy;
+        $markup = [
+            'salutation' => ['<h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">', '</h3>'],
+            'paragraph' => ['<div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:#5F5F5F;line-height:135%;">','</div>'],
+        ];
 
-        return $processedCopy;
+        $processedBody = '';
+        $copyLines = explode(PHP_EOL, $this->_processBody());
+        foreach ($copyLines as $i => $copyLine) {
+            switch ($i) {
+                case 0:
+                    $processedBody .= $markup['salutation'][0] . $copyLine . $markup['salutation'][1];
+                    break;
+                default:
+                    $processedBody .= $markup['paragraph'][0] . $copyLine . $markup['paragraph'][1];
+            }
+        }
+
+        return $processedBody;
     }
 }
