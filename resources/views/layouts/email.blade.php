@@ -260,7 +260,7 @@
                             <tr>
                                 <td align="center" valign="top">
                                     <!-- CENTERING TABLE // -->
-                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#CCCC00;" bgcolor="#333">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;" bgcolor="#FFFF66">
                                         <tr>
                                             <td align="center" valign="top">
                                                 <!-- FLEXIBLE CONTAINER // -->

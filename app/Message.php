@@ -40,6 +40,8 @@ class Message extends Model
             $reminders = \App\Reminder::select('reminders.*')
                 ->join('mots', 'reminders.mot_id','=','mots.id')
                 ->where('mots.expiry_date', $expiryDate)
+                ->where('reminders.message_id', $this->id)
+                ->whereNull('reminders.sent_date')
                 ->get();
 
             return $reminders;
