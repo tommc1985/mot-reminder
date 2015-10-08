@@ -25,6 +25,40 @@ class Reminder extends Model
     }
 
     /**
+     * Placeholders for message subject and body
+     * @return array  Placeholders
+     */
+    public static function placeholders()
+    {
+        return array(
+            '#FIRST_NAME#',
+            '#LAST_NAME#',
+            '#PHONE_NUMBER#',
+            '#EMAIL#',
+            '#VEHICLE_MAKE#',
+            '#VEHICLE_REG#',
+            '#EXPIRY_DATE#',
+        );
+    }
+
+    /**
+     * Placeholder values for message subject and body
+     * @return array  Placeholder values
+     */
+    public function placeholdersValues()
+    {
+        return array(
+            $this->mot->first_name,
+            $this->mot->last_name,
+            $this->mot->phone_number,
+            $this->mot->email,
+            $this->mot->vehicle_make,
+            $this->mot->vehicle_reg,
+            $this->mot->expiry_date,
+        );
+    }
+
+    /**
      * Send the reminder to the customer
      */
     public function send()
@@ -54,36 +88,23 @@ class Reminder extends Model
      */
     public function sendEmail()
     {
-        $this->_processMessageBody();
+        $subject = $this->_processSubject();
+        $message = $this->_processBody();
     }
 
     /**
-     * Send the Email reminder
+     * Process the body of the message (inject Customer-specific values)
      */
-    protected function _processMessageBody()
+    protected function _processBody()
     {
-        $placeholders = array(
-            '#FIRST_NAME#',
-            '#LAST_NAME#',
-            '#PHONE_NUMBER#',
-            '#EMAIL#',
-            '#VEHICLE_MAKE#',
-            '#VEHICLE_REG#',
-            '#EXPIRY_DATE#',
-        );
+        return str_replace(self::placeholders(), $this->placeholdersValues(), $this->message->message);
+    }
 
-        $values = array(
-            $this->mot->first_name,
-            $this->mot->last_name,
-            $this->mot->phone_number,
-            $this->mot->email,
-            $this->mot->vehicle_make,
-            $this->mot->vehicle_reg,
-            $this->mot->expiry_date,
-        );
-
-        $messageBody = str_replace($placeholders, $values, $this->message->message);
-
-        var_dump($messageBody);
+    /**
+     * Process the body of the subject (inject Customer-specific values)
+     */
+    protected function _processSubject()
+    {
+        return str_replace(self::placeholders(), $this->placeholdersValues(), $this->message->subject);
     }
 }
