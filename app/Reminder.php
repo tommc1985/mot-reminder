@@ -54,7 +54,7 @@ class Reminder extends Model
             $this->mot->email,
             $this->mot->vehicle_make,
             $this->mot->vehicle_reg,
-            $this->mot->expiry_date,
+            date('jS F Y', strtotime($this->mot->expiry_date)),
         );
     }
 
@@ -81,6 +81,8 @@ class Reminder extends Model
     public function sendSMS()
     {
 
+
+        return true;
     }
 
     /**
@@ -90,6 +92,8 @@ class Reminder extends Model
     {
         $subject = $this->_processSubject();
         $message = $this->_processBody();
+
+        return true;
     }
 
     /**
@@ -106,5 +110,15 @@ class Reminder extends Model
     protected function _processSubject()
     {
         return str_replace(self::placeholders(), $this->placeholdersValues(), $this->message->subject);
+    }
+
+    /**
+     * Process the passed copy into HTML for email template
+     */
+    protected static function _processHtml($copy)
+    {
+        $processedCopy = $copy;
+
+        return $processedCopy;
     }
 }
