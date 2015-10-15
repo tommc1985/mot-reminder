@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Libraries\SmsMessage as SmsMessage;
 
 class Reminder extends Model
 {
@@ -80,7 +81,24 @@ class Reminder extends Model
      */
     public function sendSMS()
     {
+        try {
+            $messageBody = $this->_processBody();
 
+            $sms = new SmsMessage();
+            $result = $sms->send($this->mot->phone_number, $messageBody);
+
+            // Check if the send was successful
+            if($result['success']) {
+                $this->sent_date = date('Y-m-d H:i:s');
+                $this->sent_message = $messageBody;
+                $this->credits = $credits;
+                $this->save();
+            } else {
+                echo 'Message failed - Error: ' . $result['error_message'];
+            }
+        } catch (ClockworkException $e) {
+            echo 'Exception sending SMS: ' . $e->getMessage();
+        }
 
         return true;
     }
