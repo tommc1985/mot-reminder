@@ -27,7 +27,7 @@ class SmsMessage {
             $this->_client = new Clockwork(env('CLOCKWORK_SMS_API'), $options);
         }
 
-        $this->checkBalance();die();
+        $this->checkBalance();
     }
 
     /**
@@ -60,9 +60,7 @@ class SmsMessage {
                         ];
 
                         // Send message
-                        //$result = $this->_client->send($message);
-                        $result['success'] = 0;
-                        $result['error_message'] = 'Test error';
+                        $result = $this->_client->send($message);
                         if($result['success']) {
                             return ['result'=>'success','credits'=>$credits];
                         } else {
@@ -113,7 +111,7 @@ class SmsMessage {
                 // Send warning email
                 $subject = 'SMS service balance running low';
                 $vars = ['balance'=>$balance];
-                \Mail::send('errors.sms_balance', $vars, function($message) use ($subject)
+                \Mail::send(['text'=>'errors.sms_balance'], $vars, function($message) use ($subject)
                 {
                     $message->to(env('DEVELOPER_EMAIL'))->subject($subject);
                 });

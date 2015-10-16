@@ -98,7 +98,7 @@ class Reminder extends Model
             // Send email
             $subject = 'SMS Send Error';
             $vars = ['reminder'=>$this,'messageBody'=>$messageBody,'errorMessage'=>$result['message']];
-            \Mail::send('errors.sms_error', $vars, function($message) use ($subject)
+            \Mail::send(['text'=>'errors.sms_error'], $vars, function($message) use ($subject)
             {
                 $message->to(env('DEVELOPER_EMAIL'))->subject($subject);
             });

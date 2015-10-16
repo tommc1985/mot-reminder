@@ -1,0 +1,1 @@
+Your Clockwork SMS Service only has {{ $balance['symbol'] . $balance['balance'] }} left in it.

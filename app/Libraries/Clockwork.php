@@ -526,9 +526,9 @@ class Clockwork {
       $info = curl_getinfo($ch);
 
       if ($response === false || $info['http_code'] != 200) {
-        throw new Exception('HTTP Error calling Clockwork API - HTTP Status: ' . $info['http_code'] . ' - cURL Erorr: ' . curl_error($ch));
+        throw new \Exception('HTTP Error calling Clockwork API - HTTP Status: ' . $info['http_code'] . ' - cURL Erorr: ' . curl_error($ch));
       } elseif (curl_errno($ch) > 0) {
-        throw new Exception('HTTP Error calling Clockwork API - cURL Error: ' . curl_error($ch));
+        throw new \Exception('HTTP Error calling Clockwork API - cURL Error: ' . curl_error($ch));
       }
 
       curl_close($ch);
@@ -554,17 +554,17 @@ class Clockwork {
       $fp = @fopen($url, 'rb', false, $ctx);
       if (!$fp) {
         ini_set('track_errors',$track);
-        throw new Exception("HTTP Error calling Clockwork API - fopen Error: $php_errormsg");
+        throw new \Exception("HTTP Error calling Clockwork API - fopen Error: $php_errormsg");
       }
       $response = @stream_get_contents($fp);
       if ($response === false) {
         ini_set('track_errors',$track);
-        throw new Exception("HTTP Error calling Clockwork API - stream Error: $php_errormsg");
+        throw new \Exception("HTTP Error calling Clockwork API - stream Error: $php_errormsg");
       }
       ini_set('track_errors',$track);
       return $response;
     } else {
-      throw new Exception("Clockwork requires PHP5 with cURL or HTTP stream support");
+      throw new \Exception("Clockwork requires PHP5 with cURL or HTTP stream support");
     }
   }
 
