@@ -26,6 +26,8 @@ class SmsMessage {
             // Create a Clockwork object using your API key
             $this->_client = new Clockwork(env('CLOCKWORK_SMS_API'), $options);
         }
+
+        $this->checkBalance();die();
     }
 
     /**
@@ -37,46 +39,44 @@ class SmsMessage {
         try {
             $credits = $this->calculateSMSCredits($messageBody);
 
-            switch ($this->_mode) {
-                case 'pretend':
-                    Log::info("SMS Message sent" . PHP_EOL .
-                        "To: {$to}" . PHP_EOL .
-                        "Messsage: \"{$messageBody}\"" . PHP_EOL .
-                        'Message Length: ' . strlen($messageBody) . PHP_EOL .
-                        "Credits: {$credits}");
-                    break;
-                case 'dev': // If in dev mode run this, then run the live mode functionality
-                    $to = env('DEVELOPER_TEL');
-                    $messageBody = 'DEV:' . $messageBody;
-                case 'live':
-                    // Setup and send a message
-                    $message = [
-                        'to'      => $to,
-                        'message' => $messageBody
-                    ];
+            if ($credits !== false) {
 
-                    // Send
-                    $result = $this->_client->send($message);
-                    if($result['success']) {
-                        return ['result'=>'success','credits'=>$credits];
-                    } else {
-                        // Send email
-                        $subject = $e->getMessage();
-                        $vars = ['reminder'=>$this,'messageBody'=>$messageBody];
-                        \Mail::send('errors.sms_error', $vars, function($message) use ($subject)
-                        {
-                            $message->to(env('DEVELOPER_EMAIL'))->subject($subject);
-                        });
-                        echo 'Message failed - Error: ' . $result['error_message'];
-                    }
+                switch ($this->_mode ) {
+                    case 'pretend':
+                        Log::info("SMS Message sent" . PHP_EOL .
+                            "To: {$to}" . PHP_EOL .
+                            "Messsage: \"{$messageBody}\"" . PHP_EOL .
+                            'Message Length: ' . strlen($messageBody) . PHP_EOL .
+                            "Credits: {$credits}");
+                        break;
+                    case 'dev': // If in dev mode run this, then run the live mode functionality
+                        $to = env('DEVELOPER_TEL');
+                        $messageBody = 'DEV:' . $messageBody;
+                    case 'live':
+                        // Setup and send a message
+                        $message = [
+                            'to'      => $to,
+                            'message' => $messageBody
+                        ];
 
-                    break;
+                        // Send message
+                        //$result = $this->_client->send($message);
+                        $result['success'] = 0;
+                        $result['error_message'] = 'Test error';
+                        if($result['success']) {
+                            return ['result'=>'success','credits'=>$credits];
+                        } else {
+                            return ['result'=>'error','message'=>$result['error_message']];
+                        }
+                }
+            } else {
+                return ['result'=>'error','message'=>'Message too long to send.'];
             }
         } catch (ClockworkException $e) {
-            echo 'Exception sending SMS: ' . $e->getMessage();
+            return ['result'=>'error','message'=>'ClockworkException: ' . $e->getMessage()];
         }
 
-        return false;
+        return ['result'=>'error','message'=>'Unspecified error.'];
     }
 
     /**
@@ -85,29 +85,39 @@ class SmsMessage {
      */
     public function calculateSMSCredits($messageBody)
     {
-        try {
-            $messageLength = strlen($messageBody);
-            switch (true) {
-                case $messageLength <= 160:
-                    return 1; // 1 credit
-                    break;
-                case $messageLength <= 320 && $messageLength > 160:
-                    return 2; // 2 credits
-                    break;
-                case $messageLength <= 480 && $messageLength > 320:
-                    return 3; // 3 credits
-                    break;
-                default:
-                    throw new \Exception("SMS message too long (ID:{$this->id})");
+        $messageLength = strlen($messageBody);
+        switch (true) {
+            case $messageLength <= 160:
+                return 1; // 1 credit
+                break;
+            case $messageLength <= 320 && $messageLength > 160:
+                return 2; // 2 credits
+                break;
+            case $messageLength <= 459 && $messageLength > 320:
+                return 3; // 3 credits
+                break;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check balance in SMS Service account, send warning if balance too low
+     */
+    public function checkBalance()
+    {
+        if ($this->_client) {
+            $balance = $this->_client->checkBalance();
+
+            if ($balance['balance'] <= env('SMS_CREDIT_THRESHOLD')) {
+                // Send warning email
+                $subject = 'SMS service balance running low';
+                $vars = ['balance'=>$balance];
+                \Mail::send('errors.sms_balance', $vars, function($message) use ($subject)
+                {
+                    $message->to(env('DEVELOPER_EMAIL'))->subject($subject);
+                });
             }
-        } catch (\Exception $e) {
-            // Send email
-            $subject = $e->getMessage();
-            $vars = ['messageBody'=>$messageBody];
-            \Mail::send('errors.sms_length', $vars, function($message) use ($subject)
-            {
-                $message->to(env('DEVELOPER_EMAIL'))->subject($subject);
-            });
         }
     }
 }

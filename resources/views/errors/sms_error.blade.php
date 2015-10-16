@@ -1,10 +1,14 @@
-The following SMS could not be send.
-
-Message
-===============
-{{ $errorMessage }}
-
-Message
-===============
-<?php
-print_r($messageBody); ?>
+Problem sending SMS Message.<br />
+<br />
+Message<br />
+===============<br />
+{{ $errorMessage }}<br />
+<br />
+Reminder Object<br />
+===============<br />
+{{ $reminder }}
+<br />
+Message<br />
+===============<br />
+{{ $messageBody }}
+{{ strlen($messageBody) }} chars
