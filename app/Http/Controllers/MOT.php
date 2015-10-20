@@ -48,7 +48,7 @@ class Mot extends Controller
         $mot->mot_date = date('Y-m-d');
 
         $messages = \App\Message::orderBy('type', 'asc')
-            ->orderBy('delay_before', 'asc')
+            ->orderBy('threshold', 'asc')
             ->get();
 
         $reminders = \App\Message::where('enabled', 1)->lists('id', 'description')->toArray();
@@ -112,7 +112,7 @@ class Mot extends Controller
         }
 
         $messages = \App\Message::orderBy('type', 'asc')
-            ->orderBy('delay_before', 'asc')
+            ->orderBy('threshold', 'asc')
             ->get();
 
         $reminders = \App\Reminder::where('mot_id', $mot->id)->lists('message_id', 'id')->toArray();

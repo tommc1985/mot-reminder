@@ -42,4 +42,13 @@ class Mot extends Model
 
         return false;
     }
+
+    /**
+     * Return the phone number ready-prepared to be used for SMS sends
+     * @return string   Prepared Phone Number
+     */
+    public function preparedPhoneNumber()
+    {
+        return preg_replace('/^0/', '44', $this->phone_number);
+    }
 }

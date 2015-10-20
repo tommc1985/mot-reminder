@@ -81,10 +81,10 @@ class Reminder extends Model
      */
     public function sendSMS()
     {
-        $messageBody = $this->_processBody();
+        $messageBody = $this->_prepareBody();
 
         $sms = new SmsMessage();
-        $result = $sms->send($this->mot->phone_number, $messageBody);
+        $result = $sms->send($this->mot->preparedPhoneNumber(), $messageBody);
 
         // Check if the send was successful
         if($result['result'] == 'success') {
@@ -95,7 +95,7 @@ class Reminder extends Model
             }
             $this->save();
         } else {
-            // Send email
+            // Send email to Developer
             $subject = 'SMS Send Error';
             $vars = ['reminder'=>$this,'messageBody'=>$messageBody,'errorMessage'=>$result['message']];
             \Mail::send(['text'=>'errors.sms_error'], $vars, function($message) use ($subject)
@@ -114,9 +114,9 @@ class Reminder extends Model
     {
         $mot = $this->mot;
         $to = $this->mot->email;
-        $subject = $this->_processSubject();
-        $messageBody = $this->_processBody();
-        $messageHtmlBody = $this->_processHtmlBody();
+        $subject = $this->_prepareSubject();
+        $messageBody = $this->_prepareBody();
+        $messageHtmlBody = $this->_prepareHtmlBody();
 
         // Set vars
         $vars = [
@@ -148,7 +148,7 @@ class Reminder extends Model
     /**
      * Process the body of the message (inject Customer-specific values)
      */
-    protected function _processBody()
+    protected function _prepareBody()
     {
         return str_replace(self::placeholders(), $this->placeholdersValues(), $this->message->message);
     }
@@ -156,7 +156,7 @@ class Reminder extends Model
     /**
      * Process the body of the subject (inject Customer-specific values)
      */
-    protected function _processSubject()
+    protected function _prepareSubject()
     {
         return str_replace(self::placeholders(), $this->placeholdersValues(), $this->message->subject);
     }
@@ -164,25 +164,25 @@ class Reminder extends Model
     /**
      * Process the copy into HTML for email template
      */
-    protected function _processHtmlBody()
+    protected function _prepareHtmlBody()
     {
         $markup = [
             'salutation' => ['<h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">', '</h3>'],
             'paragraph' => ['<div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:#5F5F5F;line-height:135%;">','</div>'],
         ];
 
-        $processedBody = '';
-        $copyLines = explode(PHP_EOL, $this->_processBody());
+        $preparedBody = '';
+        $copyLines = explode(PHP_EOL, $this->_prepareBody());
         foreach ($copyLines as $i => $copyLine) {
             switch ($i) {
                 case 0:
-                    $processedBody .= $markup['salutation'][0] . $copyLine . $markup['salutation'][1];
+                    $preparedBody .= $markup['salutation'][0] . $copyLine . $markup['salutation'][1];
                     break;
                 default:
-                    $processedBody .= $markup['paragraph'][0] . $copyLine . $markup['paragraph'][1];
+                    $preparedBody .= $markup['paragraph'][0] . $copyLine . $markup['paragraph'][1];
             }
         }
 
-        return $processedBody;
+        return $preparedBody;
     }
 }
