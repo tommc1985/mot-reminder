@@ -332,7 +332,7 @@
                                                                     <td valign="top" bgcolor="#E1E1E1">
 
                                                                         <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;">
-                                                                            <div>Copyright &#169; {!! date('Y') !!} <a href="http://www.mpkautos.co.uk" target="_blank" style="text-decoration:none;color:#828282;"><span style="color:#828282;">MPK Autos</span></a>. All&nbsp;rights&nbsp;reserved.</div>
+                                                                            <div>Copyright &#169; {!! date('Y') !!} <a href="http://www.mpkautos.co.uk" target="_blank" style="text-decoration:none;color:#828282;"><span style="color:#828282;">{{ env('COMPANY_NAME') }}</span></a>. All&nbsp;rights&nbsp;reserved.</div>
                                                                             <div>If you do not want to recieve emails from us, you can <a href="#" target="_blank" style="text-decoration:none;color:#828282;"><span style="color:#828282;">unsubscribe</span></a>.</div>
                                                                         </div>
 

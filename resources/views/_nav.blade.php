@@ -2,7 +2,7 @@
 <header class="fullwidth-sm header sb-slide">
     <div class="container">
         <a href="{{ route('dashboard') }}" class="logo">
-            <span>MPK Autos</span>
+            <span>{{ env('COMPANY_NAME') }}</span>
         </a>
 
         <nav class="nav nav-primary">
