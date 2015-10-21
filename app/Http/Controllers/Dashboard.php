@@ -29,91 +29,107 @@ class Dashboard extends Controller
         $now = date('Y-m-d');
         $last7Days = date('Y-m-d', time() - (86400 * 7));
         $last30Days = date('Y-m-d', time() - (86400 * 30));
-        $next7Days = date('Y-m-d', time() + (86400 * 7));
+        $next30Days = date('Y-m-d', time() + (86400 * 30));
 
+        $data = [];
         // MOTs
-        $motsCount = \DB::table('mots')
+        $data['motCount'] = \DB::table('mots')
             ->count();
 
-        $motsExpiringCount = \DB::table('mots')
-            ->where('expiry_date', '>', $now)
+        $data['motExpiringCount'] = \DB::table('mots')
+            ->where('expiry_date', '>=', $now)
             ->count();
+
+        $data['motExpiringNext30Days'] = \DB::table('mots')
+            ->where('expiry_date', '>=', $now)
+            ->where('expiry_date', '<', $next30Days)
+            ->orderBy('expiry_date', 'asc')
+            ->get();
 
         // All Reminders
-        $remindersCount = \DB::table('reminders')
+        $data['reminderCount'] = \DB::table('reminders')
             ->count();
 
-        $sentRemindersCount = \DB::table('reminders')
+        $data['sentReminderCount'] = \DB::table('reminders')
             ->whereNotNull('sent_date')
             ->count();
 
         // Email Reminders
-        $emailRemindersCount = \DB::table('reminders')
+        $data['emailReminderCount'] = \DB::table('reminders')
             ->select('reminders.*')
             ->join('messages', 'messages.id', '=', 'reminders.message_id')
             ->where('messages.type', 'email')
             ->count();
 
-        $sentEmailRemindersCount = \DB::table('reminders')
+        $data['sentEmailReminderCount'] = \DB::table('reminders')
             ->select('reminders.*')
             ->join('messages', 'messages.id', '=', 'reminders.message_id')
             ->where('messages.type', 'email')
             ->whereNotNull('sent_date')
             ->count();
 
-        $sentEmailRemindersLast7Days = \DB::table('reminders')
+        $data['sentEmailRemindersLast7DaysCount'] = \DB::table('reminders')
             ->select('reminders.*')
             ->join('messages', 'messages.id', '=', 'reminders.message_id')
             ->where('messages.type', 'email')
             ->whereNotNull('sent_date')
-            ->where('sent_date', '>', $last7Days)
+            ->where('sent_date', '>=', $last7Days)
             ->count();
 
-        $sentEmailRemindersLast30Days = \DB::table('reminders')
+        $data['sentEmailRemindersLast30DaysCount'] = \DB::table('reminders')
             ->select('reminders.*')
             ->join('messages', 'messages.id', '=', 'reminders.message_id')
             ->where('messages.type', 'email')
             ->whereNotNull('sent_date')
-            ->where('sent_date', '>', $last30Days)
+            ->where('sent_date', '>=', $last30Days)
             ->count();
 
         // SMS Reminders
-        $smsRemindersCount = \DB::table('reminders')
+        $data['smsReminderCount'] = \DB::table('reminders')
             ->select('reminders.*')
             ->join('messages', 'messages.id', '=', 'reminders.message_id')
             ->where('messages.type', 'sms')
             ->count();
 
-        $sentSmsRemindersCount = \DB::table('reminders')
-            ->select('reminders.*')
-            ->join('messages', 'messages.id', '=', 'reminders.message_id')
-            ->where('messages.type', 'sms')
-            ->whereNotNull('sent_date')
-            ->count();
-
-        $sentSmsRemindersLast7Days = \DB::table('reminders')
+        $data['sentSmsReminderCount'] = \DB::table('reminders')
             ->select('reminders.*')
             ->join('messages', 'messages.id', '=', 'reminders.message_id')
             ->where('messages.type', 'sms')
             ->whereNotNull('sent_date')
-            ->where('sent_date', '>', $last7Days)
             ->count();
 
-        $sentSmsRemindersLast30Days = \DB::table('reminders')
+        $data['sentSmsRemindersLast7DaysCount'] = \DB::table('reminders')
             ->select('reminders.*')
             ->join('messages', 'messages.id', '=', 'reminders.message_id')
             ->where('messages.type', 'sms')
             ->whereNotNull('sent_date')
-            ->where('sent_date', '>', $last30Days)
+            ->where('sent_date', '>=', $last7Days)
             ->count();
 
+        $data['sentSmsRemindersLast30DaysCount'] = \DB::table('reminders')
+            ->select('reminders.*')
+            ->join('messages', 'messages.id', '=', 'reminders.message_id')
+            ->where('messages.type', 'sms')
+            ->whereNotNull('sent_date')
+            ->where('sent_date', '>=', $last30Days)
+            ->count();
 
+        $data['smsCreditsLast7DaysCount'] = \DB::table('reminders')
+            ->select('reminders.*')
+            ->join('messages', 'messages.id', '=', 'reminders.message_id')
+            ->where('messages.type', 'sms')
+            ->whereNotNull('sent_date')
+            ->where('sent_date', '>=', $last7Days)
+            ->sum('reminders.credits');
 
-        var_dump($motsCount, $motsExpiringCount, $remindersCount, $sentRemindersCount, $emailRemindersCount, $sentEmailRemindersCount, $sentEmailRemindersLast7Days, $smsRemindersCount, $sentSmsRemindersCount, $sentSmsRemindersLast7Days); die();
+        $data['smsCreditsLast30DaysCount'] = \DB::table('reminders')
+            ->select('reminders.*')
+            ->join('messages', 'messages.id', '=', 'reminders.message_id')
+            ->where('messages.type', 'sms')
+            ->whereNotNull('sent_date')
+            ->where('sent_date', '>=', $last30Days)
+            ->sum('reminders.credits');
 
-
-
-
-        return view('dashboard/index');
+        return view('dashboard/index', $data);
     }
 }
