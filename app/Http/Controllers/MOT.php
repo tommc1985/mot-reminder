@@ -51,7 +51,9 @@ class Mot extends Controller
             ->orderBy('threshold', 'asc')
             ->get();
 
-        $reminders = \App\Message::where('enabled', 1)->lists('id', 'description')->toArray();
+        $reminders = \App\Message::where('enabled', 1)
+            ->lists('id', 'description')
+            ->toArray();
 
         // load the create form (app/views/mots/create.blade.php)
         return view('mots/create', ['mot'=>$mot,'messages'=>$messages,'reminders'=>$reminders]);
@@ -94,7 +96,16 @@ class Mot extends Controller
      */
     public function show($id)
     {
-        \App::abort(404);
+        try{
+            $mot = \App\Mot::findOrFail($id);
+        }catch(\ModelNotFoundException $e){
+            \App::abort(404);
+        }
+
+        $reminders = \App\Reminder::where('mot_id', $mot->id)
+            ->get();
+
+        return view('mots/show', ['mot'=>$mot]);
     }
 
     /**
@@ -115,7 +126,9 @@ class Mot extends Controller
             ->orderBy('threshold', 'asc')
             ->get();
 
-        $reminders = \App\Reminder::where('mot_id', $mot->id)->lists('message_id', 'id')->toArray();
+        $reminders = \App\Reminder::where('mot_id', $mot->id)
+            ->lists('message_id', 'id')
+            ->toArray();
 
         return view('mots/edit', ['mot'=>$mot,'messages'=>$messages,'reminders'=>$reminders]);
     }
@@ -158,7 +171,7 @@ class Mot extends Controller
      */
     public function destroy($id)
     {
-        $mot = Player::findOrFail($id);
+        $mot = \App\Mot::findOrFail($id);
 
         $mot->delete();
 

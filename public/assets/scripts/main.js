@@ -158,6 +158,28 @@ var website = (function () {
         };
     }());
 
+    var deleteModel = (function () {
+        var $forms = $('.delete-model');
+
+        function init() {
+            $forms.submit(function(e) {
+                if (confirm($(this).data('delete-message'))) {
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        return {
+            init: function () {
+                if ($forms.length) {
+                    init();
+                }
+            }
+        };
+    }());
+
 
 
 // Global init function
@@ -174,6 +196,8 @@ var website = (function () {
             stablefordCalculator.init();
 
             scrollTo.init();
+
+            deleteModel.init();
 
 			// SVG fallback
 			if (!Modernizr.svg) {

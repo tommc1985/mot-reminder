@@ -53,8 +53,9 @@
                                     'class' => 'delete-model',
                                     'data-delete-message' => "Are you sure you want to delete {$mot->first_name} {$mot->last_name}'s MOT?"
                                 ]) !!}
+                                    <a class="btn btn-xs btn-primary" href="{{ route('mots.show', $mot->id) }}">View</a>
                                     <a class="btn btn-xs btn-primary" href="{{ route('mots.edit', $mot->id) }}">Edit</a>
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-xs btn-danger']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-xs btn-danger hidden']) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>
