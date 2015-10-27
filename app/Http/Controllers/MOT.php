@@ -103,9 +103,14 @@ class Mot extends Controller
         }
 
         $reminders = \App\Reminder::where('mot_id', $mot->id)
+            ->select('reminders.*')
+            ->join('messages', 'messages.id', '=', 'reminders.message_id')
+            ->orderBy('reminders.sent_date', 'desc')
+            ->orderBy('messages.threshold', 'desc')
+            ->orderBy('messages.type', 'desc')
             ->get();
 
-        return view('mots/show', ['mot'=>$mot]);
+        return view('mots/show', ['mot'=>$mot,'reminders'=>$reminders]);
     }
 
     /**

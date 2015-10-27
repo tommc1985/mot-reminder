@@ -11,6 +11,7 @@
             <div class="col-sm-6 col-sm-offset-3">
 
                 <h1>View MOT</h1>
+                <h2>Details</h2>
 
                 <dl class="dl-horizontal">
                     <dt>Name</dt>
@@ -38,6 +39,33 @@
                     <dd>None</dd>
                     @endif
                 </dl>
+
+                <h2>Reminders</h2>
+
+                @if ($reminders)
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($reminders as $reminder)
+                        <tr>
+                            <td>{{ $reminder->message->description }}</td>
+                            @if ($reminder->sent_date)
+                            <td>Sent ({{ date('d/m/y, H:i', strtotime($reminder->sent_date)) }})</td>
+                            @else
+                            <td>Pending</td>
+                            @endif
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                <p>No reminders set up for this MOT.</p>
+                @endif
 
             </div>
         </div>
